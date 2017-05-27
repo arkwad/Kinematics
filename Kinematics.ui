@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>978</width>
-    <height>717</height>
+    <width>1428</width>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,12 +19,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>979</width>
+      <width>1401</width>
       <height>691</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -199,10 +199,50 @@
      <widget class="MatplotlibWidget" name="i_plot">
       <property name="geometry">
        <rect>
-        <x>150</x>
+        <x>0</x>
         <y>0</y>
         <width>811</width>
         <height>641</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QwtPlot" name="th11">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>0</y>
+        <width>581</width>
+        <height>171</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QwtPlot" name="th21">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>170</y>
+        <width>581</width>
+        <height>161</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QwtPlot" name="th12">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>330</y>
+        <width>581</width>
+        <height>161</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QwtPlot" name="th22">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>490</y>
+        <width>581</width>
+        <height>161</height>
        </rect>
       </property>
      </widget>
@@ -214,8 +254,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>978</width>
-     <height>21</height>
+     <width>1428</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -226,6 +266,11 @@
    <class>MatplotlibWidget</class>
    <extends>QWidget</extends>
    <header>matplotlibwidget</header>
+  </customwidget>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

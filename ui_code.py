@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Kinematics.ui'
 #
-# Created: Wed May 17 20:19:03 2017
+# Created: Fri May 19 15:40:35 2017
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,11 +26,11 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(978, 717)
+        MainWindow.resize(1428, 748)
         self.widget = QtGui.QWidget(MainWindow)
         self.widget.setObjectName(_fromUtf8("widget"))
         self.Theta1_1 = QtGui.QTabWidget(self.widget)
-        self.Theta1_1.setGeometry(QtCore.QRect(0, 0, 979, 691))
+        self.Theta1_1.setGeometry(QtCore.QRect(0, 0, 1401, 691))
         self.Theta1_1.setObjectName(_fromUtf8("Theta1_1"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
@@ -80,12 +80,24 @@ class Ui_MainWindow(object):
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName(_fromUtf8("tab_2"))
         self.i_plot = MatplotlibWidget(self.tab_2)
-        self.i_plot.setGeometry(QtCore.QRect(150, 0, 811, 641))
+        self.i_plot.setGeometry(QtCore.QRect(0, 0, 811, 641))
         self.i_plot.setObjectName(_fromUtf8("i_plot"))
+        self.th11 = Qwt5.QwtPlot(self.tab_2)
+        self.th11.setGeometry(QtCore.QRect(810, 0, 581, 171))
+        self.th11.setObjectName(_fromUtf8("th11"))
+        self.th21 = Qwt5.QwtPlot(self.tab_2)
+        self.th21.setGeometry(QtCore.QRect(810, 170, 581, 161))
+        self.th21.setObjectName(_fromUtf8("th21"))
+        self.th12 = Qwt5.QwtPlot(self.tab_2)
+        self.th12.setGeometry(QtCore.QRect(810, 330, 581, 161))
+        self.th12.setObjectName(_fromUtf8("th12"))
+        self.th22 = Qwt5.QwtPlot(self.tab_2)
+        self.th22.setGeometry(QtCore.QRect(810, 490, 581, 161))
+        self.th22.setObjectName(_fromUtf8("th22"))
         self.Theta1_1.addTab(self.tab_2, _fromUtf8(""))
         MainWindow.setCentralWidget(self.widget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 978, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1428, 26))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
@@ -93,7 +105,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.Theta1_1.setCurrentIndex(0)
+        self.Theta1_1.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -108,4 +120,15 @@ class Ui_MainWindow(object):
         self.Theta1_1.setTabText(self.Theta1_1.indexOf(self.tab), _translate("MainWindow", "Tab 1", None))
         self.Theta1_1.setTabText(self.Theta1_1.indexOf(self.tab_2), _translate("MainWindow", "Tab 2", None))
 
+from PyQt4 import Qwt5
 from matplotlibwidget import MatplotlibWidget
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    MainWindow = QtGui.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+
