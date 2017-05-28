@@ -1,15 +1,14 @@
 # ==========================================================
-#	File : main.py
-#	Author: Arkadiusz Wadowski 
-#	Email: wadowski.arkadiusz@gmail.com
-#	Created: 17.05.2017
+#   File : main.py
+#   Author: Arkadiusz Wadowski
+#   Email: wadowski.arkadiusz@gmail.com
+#   Created: 17.05.2017
 # ==========================================================
 #  L1 = 1.40; L2 = 0.85; M1 = 1.40; M2 = 3.20
 # ==========================================================
 import sys
 from math import sqrt, sin, asin, cos, acos, degrees
 from PyQt4 import QtGui, QtCore
-from PyQt4.QtCore import QThread
 from PyQt4.QtGui import QMessageBox
 from ui_code import Ui_MainWindow
 import numpy as np
@@ -44,27 +43,50 @@ class MyWindow(QtGui.QMainWindow):
         self.ui.i_plot.axes.set_ylim(-0.4, 2.5)
         self.ui.i_plot.axes.set_aspect('equal', 'datalim')
 
+        self.ui.th11.axes.set_xlim(1, 3.5)
+        self.ui.th11.axes.set_ylim(-0.4, 5.5)
+
         self.threadclass = MovePlotThread()
+        # send reference to ui for thread
+        self.threadclass.provide_ui(self.ui)
 
         QtCore.QObject.connect(self.ui.f_x, QtCore.SIGNAL("clicked()"), self.update_forward_kin_plot)
         self.connect(self.threadclass, QtCore.SIGNAL("plot"), self.plot_movement)
         self.ui.f_x.valueChanged.connect(self.update_forward_kin_plot)
         self.ui.f_y.valueChanged.connect(self.update_forward_kin_plot)
 
-
         self.threadclass.start()
 
     def plot_movement(self):
- #       if True == self.ui.tab_2.isTabEnabled(1):
- #           print 'ok'
         lista = np.arange(1, 1.51, 0.01)
         ver = np.sin(50 * lista) / 10 + 1.5
 
         self.ui.i_plot.draw()
+
+        tm = []
+        th11 = []
+        th21 = []
+        th12 = []
+        th22 = []
         for i in xrange(0,lista.size):
-            theta21, theta31, theta22, theta32 = self.calculate_angles(lista[i],ver[i])
-            coord1 = self.get_coordinates(theta21, theta31)
-            coord2 = self.get_coordinates(theta22, theta32)
+            theta11, theta21, theta12, theta22 = self.calculate_angles(lista[i],ver[i])
+            th11.append((theta11*180)/3.1415)
+            th21.append((theta21*180)/3.1415)
+            th12.append((theta12*180)/3.1415)
+            th22.append((theta22*180)/3.1415)
+            tm.append(lista[i])
+            # plot angles
+            self.ui.th11.axes.plot(tm, th11, 'blue')
+            self.ui.th11.draw()
+            self.ui.th21.axes.plot(tm, th21, 'blue')
+            self.ui.th21.draw()
+            self.ui.th12.axes.plot(tm, th12, 'red')
+            self.ui.th12.draw()
+            self.ui.th22.axes.plot(tm, th22, 'red')
+            self.ui.th22.draw()
+
+            coord1 = self.get_coordinates(theta11, theta21)
+            coord2 = self.get_coordinates(theta12, theta22)
             self.ui.i_plot.axes.cla()
             self.ui.i_plot.axes.plot(lista, ver, 'black')
             self.ui.i_plot.axes.hold(True)
@@ -73,7 +95,7 @@ class MyWindow(QtGui.QMainWindow):
     def update_forward_kin_plot(self):
         x = self.ui.f_x.value()
         y = self.ui.f_y.value()
-
+        print self.ui.Theta1_1.currentIndex()
         theta21, theta31, theta22, theta32 = self.calculate_angles(x, y)
         self.ui.f_th1_1.setText( str( degrees(theta21) ))
         self.ui.f_th2_1.setText( str( degrees(theta31) ) )
@@ -120,7 +142,6 @@ class MyWindow(QtGui.QMainWindow):
 
                 self.ui.i_plot.draw()
 
-
     def calculate_angles (self, x, y):
 
         A = (x ** 2 + (y - self.L1) ** 2 + self.L2 ** 2 - self.L3 ** 2) / (2 * x * self.L2)
@@ -156,11 +177,16 @@ class MovePlotThread(QThread):
 
     def __init__(self, parent=None):
         super(MovePlotThread, self).__init__(parent)
+        self.ui = None
+
+    def provide_ui(self, ui):
+        self.ui = ui
 
     def run(self):
         while True:
-            time.sleep(3)
-            self.emit(QtCore.SIGNAL("plot"))
+            if 1 == self.ui.Theta1_1.currentIndex():
+                self.emit(QtCore.SIGNAL("plot"))
+                time.sleep(3.5)
 
 
 if __name__ == '__main__':
